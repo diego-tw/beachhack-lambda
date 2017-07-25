@@ -4,6 +4,9 @@ public class DrinkStock {
     private String drinkName;
     private Integer quantity;
 
+    public DrinkStock() {
+    }
+
     public DrinkStock(final String drinkName, final Integer quantity) {
         this.drinkName = drinkName;
         this.quantity = quantity;
