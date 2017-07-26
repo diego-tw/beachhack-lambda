@@ -1,0 +1,30 @@
+console.log('Redeploying...');
+var AWS = require('aws-sdk');
+var lambda = new AWS.Lambda();
+exports.handler = function(event, context) {
+    key = event.Records[0].s3.object.key;
+    bucket = event.Records[0].s3.bucket.name;
+    version = event.Records[0].s3.object.versionId;
+    if (bucket == "BUCKET NAME" && key == "JAR FILE.jar") {
+        var functionName = "XXX-THE NAME OF THE LAMBDA WE WANT TO UPDATE";
+        console.log("...found newly uploaded lambda version: " + version+"...");
+        var params = {
+            FunctionName: functionName,
+            S3Key: key,
+            S3Bucket: bucket,
+            S3ObjectVersion: version
+        };
+        lambda.updateFunctionCode(params, function(err, data) {
+            if (err) {
+                console.log(err, err.stack);
+                context.fail(err);
+            } else {
+                console.log(data);
+                context.succeed(data);
+            }
+        });
+        console.log("...redeployed "+ functionName + " version " + version);
+    } else {
+        context.succeed("Ignoring new S3 upload " + key + " in bucket " + bucket + " with version " + version);
+    }
+}; 
