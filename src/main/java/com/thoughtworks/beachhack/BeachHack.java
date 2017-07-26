@@ -25,6 +25,8 @@ public class BeachHack implements RequestHandler<DrinkStock, Map<String, Integer
         }
 
         logger.log("Returning inventory: " + inventory.getInventoryMap());
+        logger.log("Just testing deploy");
+        
         return inventory.getInventoryMap();
     }
 
