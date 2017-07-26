@@ -24,6 +24,7 @@ public class BeachHack implements RequestHandler<DrinkStock, Map<String, Integer
             inventory.updateInventory(delta.getDrinkName(), delta.getQuantity());
         }
 
+        logger.log("Returning inventory: " + inventory.getInventoryMap());
         return inventory.getInventoryMap();
     }
 
