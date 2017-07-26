@@ -18,7 +18,11 @@ public class BeachHack implements RequestHandler<DrinkStock, Map<String, Integer
         LambdaLogger logger = context.getLogger();
         logger.log("Got a request for drink " + delta.getDrinkName() + ": " + delta.getQuantity());
 
-        inventory.updateInventory(delta.getDrinkName(), delta.getQuantity());
+        if (delta.getDrinkName() == null || delta.getQuantity() == null) {
+            logger.log("Null value of drinkName or quantity: no update");
+        } else {
+            inventory.updateInventory(delta.getDrinkName(), delta.getQuantity());
+        }
 
         return inventory.getInventoryMap();
     }
