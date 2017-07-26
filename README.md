@@ -5,7 +5,7 @@ BeachHack on AWS Lambda: stock alert for Mads
 
 ### User setup
 * Get access to the AWS Account used for this project
-* Go into IAM and create a new user, make sure that you generate an AWS Access Key and Secret for the user (keep these values as you won't be able to get the secret again).
+* Go into IAM and create a new user, make sure that you generate an AWS Access Key and Secret for the user, tick "Programmatic access"(keep these values as you won't be able to get the secret again).
 * Assign the user to the `beachhackers` group, as this will give the user the correct permissions.
 
 ### AWS CLI Setup
