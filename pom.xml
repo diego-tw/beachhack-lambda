@@ -77,7 +77,7 @@
                         <configuration>
                             <tasks name="Upload to S3">
                                 <exec dir="${basedir}" executable="aws" failonerror="true">
-                                    <arg line="s3 cp --region us-east-2 ./target/com.thoughtworks.beachhack-${project.version}.jar s3://com.sunics.beachhack.binaries/"/>
+                                    <arg line="s3 cp --region us-east-2 ./target/com.thoughtworks.beachhack-${project.version}.jar s3://com.thoughtworks.beachhack.bin/"/>
                                 </exec>
                             </tasks>
                         </configuration>
