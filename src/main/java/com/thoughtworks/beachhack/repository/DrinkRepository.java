@@ -6,8 +6,8 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.thoughtworks.beachhack.model.DrinkStock;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * Created by wgauvin on 26/7/17.
@@ -22,10 +22,22 @@ public class DrinkRepository {
                 .build();
     }
 
-    public List<DrinkStock> listDrinks() {
+    public Optional<DrinkStock> getDrinkStock(String drink) {
         DynamoDBMapper mapper = new DynamoDBMapper(client);
 
-        return new ArrayList<>(mapper.scan(DrinkStock.class, new DynamoDBScanExpression()));
+        return Optional.ofNullable(mapper.load(DrinkStock.class, drink));
+    }
+
+    public void save(DrinkStock drinkStock) {
+        DynamoDBMapper mapper = new DynamoDBMapper(client);
+        mapper.save(drinkStock);
+    }
+
+    public Stream<DrinkStock> loadAll() {
+        DynamoDBMapper mapper = new DynamoDBMapper(client);
+
+        DynamoDBScanExpression expression = new DynamoDBScanExpression();
+        return mapper.scan(DrinkStock.class, expression).stream();
     }
 
 }

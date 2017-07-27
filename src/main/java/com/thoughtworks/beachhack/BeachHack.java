@@ -10,7 +10,15 @@ import java.util.Map;
 
 public class BeachHack implements RequestHandler<DrinkStock, Map<String, Integer>> {
 
-    private DrinkInventory inventory = new DrinkInventory();
+    private final DrinkInventory inventory;
+
+    public BeachHack() {
+        this.inventory = new DrinkInventory();
+    }
+
+    public BeachHack(DrinkInventory inventory) {
+        this.inventory = inventory;
+    }
 
     @Override
     public Map<String, Integer> handleRequest(DrinkStock delta, Context context) {
