@@ -2,9 +2,8 @@ package com.thoughtworks.beachhack;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
-import com.thoughtworks.beachhack.model.DrinkInventory;
 import com.thoughtworks.beachhack.model.DrinkStock;
-import org.hamcrest.Matchers;
+import com.thoughtworks.beachhack.service.DrinkInventory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,9 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
