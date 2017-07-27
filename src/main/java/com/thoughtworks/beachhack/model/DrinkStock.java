@@ -43,6 +43,10 @@ public class DrinkStock {
         this.quantity = quantity;
     }
 
+    public Integer getAlertThreshold() {
+      return alertThreshold;
+    }
+
     @Override
     public String toString() {
         return "DrinkStock{" +
