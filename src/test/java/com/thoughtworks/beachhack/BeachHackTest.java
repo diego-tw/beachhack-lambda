@@ -2,8 +2,9 @@ package com.thoughtworks.beachhack;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
-import com.thoughtworks.beachhack.service.DrinkInventory;
+import com.thoughtworks.beachhack.model.DrinkInventory;
 import com.thoughtworks.beachhack.model.DrinkStock;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

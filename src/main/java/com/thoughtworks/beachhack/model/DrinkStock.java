@@ -9,6 +9,7 @@ public class DrinkStock {
 
     private String drinkName;
     private Integer quantity;
+    private Integer alertThreshold;
 
     public DrinkStock() {
     }
@@ -16,6 +17,12 @@ public class DrinkStock {
     public DrinkStock(final String drinkName, final Integer quantity) {
         this.drinkName = drinkName;
         this.quantity = quantity;
+    }
+
+    public DrinkStock(final String drinkName, final Integer quantity, final Integer alertThreshold) {
+        this.drinkName = drinkName;
+        this.quantity = quantity;
+        this.alertThreshold = alertThreshold;
     }
 
     @DynamoDBHashKey(attributeName = "drink_name")
