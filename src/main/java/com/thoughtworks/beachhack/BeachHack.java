@@ -3,7 +3,7 @@ package com.thoughtworks.beachhack;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.thoughtworks.beachhack.model.DrinkInventory;
+import com.thoughtworks.beachhack.service.DrinkInventory;
 import com.thoughtworks.beachhack.model.DrinkStock;
 
 import java.util.Map;

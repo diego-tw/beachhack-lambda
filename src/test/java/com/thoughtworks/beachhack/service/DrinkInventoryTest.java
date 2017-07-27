@@ -1,5 +1,6 @@
-package com.thoughtworks.beachhack.model;
+package com.thoughtworks.beachhack.service;
 
+import com.thoughtworks.beachhack.model.DrinkStock;
 import com.thoughtworks.beachhack.repository.DrinkRepository;
 import org.junit.Assert;
 import org.junit.Before;
