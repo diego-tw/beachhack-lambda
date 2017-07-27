@@ -12,3 +12,5 @@ BeachHack on AWS Lambda: stock alert for Mads
 * Install `awscli` as per [Installing the AWS Command Line Interface](http://docs.aws.amazon.com/cli/latest/userguide/installing.html) or use `homebrew` if on a Mac.
 * On your machine use the AWS CLI and run `aws configure` this will as you for the access key, access secret and the default region; use the values from when you created the IAM user and use 'us-east-2' (Ohio) for the default region
 
+## Build and Deploy
+To build and deploy the 'BeachHack' lambda function, do a ```mvn clean package deploy```.

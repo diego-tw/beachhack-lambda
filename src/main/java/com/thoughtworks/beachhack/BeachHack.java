@@ -3,14 +3,22 @@ package com.thoughtworks.beachhack;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.thoughtworks.beachhack.model.DrinkInventory;
 import com.thoughtworks.beachhack.model.DrinkStock;
+import com.thoughtworks.beachhack.service.DrinkInventory;
 
 import java.util.Map;
 
 public class BeachHack implements RequestHandler<DrinkStock, Map<String, Integer>> {
 
-    private DrinkInventory inventory = new DrinkInventory();
+    private final DrinkInventory inventory;
+
+    public BeachHack() {
+        this.inventory = new DrinkInventory();
+    }
+
+    public BeachHack(DrinkInventory inventory) {
+        this.inventory = inventory;
+    }
 
     @Override
     public Map<String, Integer> handleRequest(DrinkStock delta, Context context) {
@@ -25,7 +33,6 @@ public class BeachHack implements RequestHandler<DrinkStock, Map<String, Integer
         }
 
         logger.log("Returning inventory: " + inventory.getInventoryMap());
-        logger.log("Just testing deploy");
         
         return inventory.getInventoryMap();
     }
