@@ -87,8 +87,14 @@
                         <phase>deploy</phase>
                         <configuration>
                             <tasks name="Upload to S3">
+                                <exec dir="${basedir}/beach_hack_ui" executable="npm" failonerror="true">
+                                    <arg line="run build"/>
+                                </exec>
                                 <exec dir="${basedir}" executable="aws" failonerror="true">
                                     <arg line="s3 cp --region us-east-2 ./target/com.thoughtworks.beachhack-${project.version}.jar s3://com.thoughtworks.beachhack.bin/"/>
+                                </exec>
+                                <exec dir="${basedir}" executable="aws" failonerror="true">
+                                    <arg line="s3 sync --region us-east-2 ./beach_hack_ui/build s3://com.thoughtworks.beachhack.web/"/>
                                 </exec>
                             </tasks>
                         </configuration>

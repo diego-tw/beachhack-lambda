@@ -13,7 +13,7 @@ BeachHack on AWS Lambda: stock alert for Mads
 * On your machine use the AWS CLI and run `aws configure` this will as you for the access key, access secret and the default region; use the values from when you created the IAM user and use 'us-east-2' (Ohio) for the default region
 
 ## Build and Deploy
-To build and deploy the 'BeachHack' lambda function, do a ```mvn clean package deploy```.
+To build and deploy the 'BeachHack' lambda function as well as the front-end in ```beach_hack_ui```, do a ```mvn clean package deploy```.
 
 ## Run
 There are three ways to invoke the Lambda function:
@@ -22,5 +22,5 @@ There are three ways to invoke the Lambda function:
 * By logging into the frontend on https://s3.us-east-2.amazonaws.com/com.thoughtworks.beachhack.web/index.html
 
 ## Getting Notifications
-Add a 'email' subscription to the SNS topic ```low_stock_alert``` topic. YOu will get a confirmation email from AWS SNS, then follow the link in there to activate your subscription.
+Add a 'email' subscription to the SNS topic ```low_stock_alert``` topic. You will get a confirmation email from AWS SNS, then follow the link in there to activate your subscription.
                                                                 
