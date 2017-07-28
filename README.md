@@ -20,4 +20,7 @@ There are three ways to invoke the Lambda function:
 * Via the AWS Lambda console: pressing TEST with a test event ```{"drinkName": "Campari", "quantity": 1}```
 * Via the AWS API Gateway console: pressing the TEST icon with a test event ```{"drinkName": "Campari", "quantity": 1}```
 * By logging into the frontend on https://s3.us-east-2.amazonaws.com/com.thoughtworks.beachhack.web/index.html
+
+## Getting Notifications
+Add a 'email' subscription to the SNS topic ```low_stock_alert``` topic. YOu will get a confirmation email from AWS SNS, then follow the link in there to activate your subscription.
                                                                 
