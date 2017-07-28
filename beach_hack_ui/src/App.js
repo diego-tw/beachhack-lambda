@@ -9,10 +9,9 @@ class App extends Component {
     this.addDrink = this.addDrink.bind(this);
     this.updateDrink = this.updateDrink.bind(this);
 
-    this.state={
-      drinksInventory: {}
-    };
+    this.state={};
   }
+
   addDrink(drink) {
     const drinks = {...this.state.drinksInventory};
 
@@ -31,12 +30,19 @@ class App extends Component {
     this.setState({drinks});
 }
   render() {
+
+    let drinkList = [
+      {
+        name: "coke",
+        count: 100,
+        imgSrc: "",
+      }
+    ]
+
     return (
       <div className="App">
         <Inventory
-          addDrink={this.addDrink}
-          updateDrink={this.updateDrink}
-          drinks={this.drinks}/>
+          drinkList={drinkList}/>
       </div>
     );
   }

@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
 
-class AddDrinkForm extends Component{
-  createDrink(event){
+class AddDrinkForm extends Component {
+
+  createDrink = (event, drink) => {
+    console.log(drink);
     event.preventDefault();
-    const drink = {
-      // image: this.image.value,
-      name: this.name.value,
-      count: this.count.value
-    }
     this.props.addDrink(drink);
   }
+
   render() {
+
+    let drink = {
+      name: "",
+      count: 0,
+    }
+
     return(
-      <form className="newDrink" onSubmit={(e) => this.createDrink(e)}>
-        <input type="text" placeholder="Drink Name" ref={(input) => {this.name = input}}/>
-        <input type="text" placeholder="Drink Count" ref={(input) => {this.count = input}}/>
+      <form className="newDrink" onSubmit={(event) => this.createDrink(event, drink)}>
+        <input type="text" placeholder="Drink Name" onChange={event => {drink.name = event.target.value}}/>
+        <input type="number" placeholder="Drink Count" onChange={event => {drink.count = event.target.value}}/>
         <button type="submit"> Add Drink</button>
       </form>
     );
