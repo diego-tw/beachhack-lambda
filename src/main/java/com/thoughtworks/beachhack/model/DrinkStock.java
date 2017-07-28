@@ -7,9 +7,11 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 @DynamoDBTable(tableName = "drink_stock")
 public class DrinkStock {
 
+    public static final int DEFAULT_ALERT_THRESHOLD = 1;
+
     private String drinkName;
     private Integer quantity;
-    private Integer alertThreshold;
+    private Integer alertThreshold = DEFAULT_ALERT_THRESHOLD;
 
     public DrinkStock() {
     }
