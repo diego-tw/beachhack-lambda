@@ -14,3 +14,10 @@ BeachHack on AWS Lambda: stock alert for Mads
 
 ## Build and Deploy
 To build and deploy the 'BeachHack' lambda function, do a ```mvn clean package deploy```.
+
+## Run
+There are three ways to invoke the Lambda function:
+* Via the AWS Lambda console: pressing TEST with a test event ```{"drinkName": "Campari", "quantity": 1}```
+* Via the AWS API Gateway console: pressing the TEST icon with a test event ```{"drinkName": "Campari", "quantity": 1}```
+* By logging into the frontend on https://s3.us-east-2.amazonaws.com/com.thoughtworks.beachhack.web/index.html
+                                                                

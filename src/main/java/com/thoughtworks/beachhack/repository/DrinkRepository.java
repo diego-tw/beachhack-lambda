@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.model.AmazonDynamoDBException;
 import com.amazonaws.services.dynamodbv2.model.ResourceNotFoundException;
 import com.thoughtworks.beachhack.model.DrinkStock;
 
@@ -24,10 +25,10 @@ public class DrinkRepository {
     }
 
     public Optional<DrinkStock> getDrinkStock(String drink) {
-        DynamoDBMapper mapper = new DynamoDBMapper(client);
         try {
+            DynamoDBMapper mapper = new DynamoDBMapper(client);
             return Optional.ofNullable(mapper.load(DrinkStock.class, drink));
-        } catch (ResourceNotFoundException e) {
+        } catch (AmazonDynamoDBException e) {
             return Optional.empty();
         }
     }
@@ -37,7 +38,7 @@ public class DrinkRepository {
         try {
             mapper.save(drinkStock);
         } catch (ResourceNotFoundException e) {
-            throw new IllegalStateException("Could not save drink stock - does the DynamoDB table 'drink_stock' exist ?");
+            throw new IllegalStateException("Could not save drink stock - does the DynamoDB table 'drink_stock' with hashkey 'drinkName' exist ?");
         }
     }
 

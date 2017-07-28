@@ -87,10 +87,10 @@ public class BeachHackTest {
         beachHack.handleRequest(new DrinkStock(campariStock.getDrinkName(), increase), context);
 
         if (shouldRaiseAlert) {
-            verify(alertService).alertLowStockLevel(campariStock);
+            verify(alertService).alertLowStockLevel(campariStock.getDrinkName(), campariStock.getQuantity()+increase);
         }
         else {
-            verify(alertService, never()).alertLowStockLevel(campariStock);
+            verify(alertService, never()).alertLowStockLevel(any(),anyInt());
         }
     }
 

@@ -34,12 +34,11 @@ public class BeachHack implements RequestHandler<DrinkStock, Map<String, Integer
         if (delta.getDrinkName() == null || delta.getQuantity() == null) {
             logger.log("Null value of drinkName or quantity: no update");
         } else {
+            logger.log("Checking stock level to see if we need to raise a low-stock alert");
+            DrinkStock drinkStock = inventory.getDrinkStock(delta.getDrinkName());
+            checkStockLevelIfNeeded(drinkStock, delta.getQuantity());
             inventory.updateInventory(delta.getDrinkName(), delta.getQuantity());
         }
-
-        logger.log("Checking stock level to see if we need to raise a low-stock alert");
-        DrinkStock drinkStock = inventory.getDrinkStock(delta.getDrinkName());
-        checkStockLevelIfNeeded(drinkStock, delta.getQuantity());
 
         logger.log("Returning full inventory: " + inventory.getInventoryMap());
         return inventory.getInventoryMap();
@@ -48,7 +47,7 @@ public class BeachHack implements RequestHandler<DrinkStock, Map<String, Integer
 
     protected void checkStockLevelIfNeeded(DrinkStock drinkStock, int levelChange) {
         if (drinkStock.getQuantity() > drinkStock.getAlertThreshold() && drinkStock.getQuantity() + levelChange <= drinkStock.getAlertThreshold()) {
-            alertService.alertLowStockLevel(drinkStock);
+            alertService.alertLowStockLevel(drinkStock.getDrinkName(), drinkStock.getQuantity()+levelChange);
         }
     }
 

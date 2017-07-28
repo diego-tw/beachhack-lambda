@@ -11,6 +11,8 @@ public class DrinkStock {
 
     private String drinkName;
     private Integer quantity;
+
+
     private Integer alertThreshold = DEFAULT_ALERT_THRESHOLD;
 
     public DrinkStock() {
@@ -27,7 +29,7 @@ public class DrinkStock {
         this.alertThreshold = alertThreshold;
     }
 
-    @DynamoDBHashKey(attributeName = "drink_name")
+    @DynamoDBHashKey(attributeName = "drinkName")
     public String getDrinkName() {
         return drinkName;
     }
@@ -41,12 +43,18 @@ public class DrinkStock {
         return quantity;
     }
 
+
     public void setQuantity(final Integer quantity) {
         this.quantity = quantity;
     }
 
+    @DynamoDBAttribute(attributeName = "alertThreshold")
     public Integer getAlertThreshold() {
-      return alertThreshold;
+        return alertThreshold;
+    }
+
+    public void setAlertThreshold(Integer alertThreshold) {
+        this.alertThreshold = alertThreshold;
     }
 
     @Override

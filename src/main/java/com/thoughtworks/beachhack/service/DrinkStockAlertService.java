@@ -18,11 +18,11 @@ public class DrinkStockAlertService {
         this.topicArn = client.createTopic("low_stock_alert").getTopicArn();
     }
 
-    public void alertLowStockLevel(DrinkStock stock) {
+    public void alertLowStockLevel(String drinkName, int newStockLevel) {
         PublishRequest publishRequest = new PublishRequest()
                 .withTopicArn(topicArn)
-                .withSubject(String.format("Stock level for %s is low", stock.getDrinkName()))
-                .withMessage(String.format("Current stock level for %s is %d", stock.getDrinkName(), stock.getQuantity()));
+                .withSubject(String.format("Stock level for %s is low", drinkName))
+                .withMessage(String.format("Current stock level for %s is %d", drinkName, newStockLevel));
 
         client.publish(publishRequest);
     }
