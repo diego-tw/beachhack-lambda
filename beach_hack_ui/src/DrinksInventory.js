@@ -11,7 +11,7 @@ class DrinksInventory extends React.Component{
       [
         {
           name: "coke",
-          count: 0,
+          quantity: 0,
           imgSrc: "",
         }
       ]
@@ -36,7 +36,7 @@ class DrinksInventory extends React.Component{
               </tr>
               <tr>
                 <td>
-                  <input type="number" className="counter" value={drink.count} onChange={event => this.updateDrink(event)}/>
+                  <input type="number" className="counter" value={drink.quantity} onChange={event => this.updateDrink(event, drink)}/>
                 </td>
               </tr>
               <tr>
@@ -54,6 +54,20 @@ class DrinksInventory extends React.Component{
         </td>
       </tr>
     );
+  }
+
+  updateDrink = (event, drink) => {
+    event.preventDefault();
+
+    this.setState({
+      drinkList: [
+        {
+          name: drink.name,
+          quantity: event.target.value,
+          imgSrc: drink.imgSrc,
+        }
+      ]
+    });
   }
 
   render() {
