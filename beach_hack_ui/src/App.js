@@ -1,48 +1,28 @@
 import React, { Component } from 'react';
 import './App.css';
 import Inventory from './DrinksInventory';
+import ApiService from "./ApiService";
 
 class App extends Component {
   constructor(){
     super();
 
-    this.addDrink = this.addDrink.bind(this);
-    this.updateDrink = this.updateDrink.bind(this);
-
-    this.state={};
+    this.drinkListReq = ApiService.buildDrinksListRequest();
+    this.updateDrinkReq = ApiService.buildUpdateDrinkRequest();
   }
 
-  addDrink(drink) {
-    const drinks = {...this.state.drinksInventory};
-
-    // var drinkName = drink.getName();
-    // currentStocklevel + count if count < 0 return 0
-
-    const timestamp = Date.now();
-    drinks[`drink-${timestamp}`] = drink;
-
-    this.setState({drinksInventory: drinks});
-  }
-  updateDrink(key, updatedDrink) {
-    const drinks = {...this.state.drinksInventory};
-    drinks[key] =  updatedDrink;
-    console.log(key);
-    this.setState({drinks});
-}
   render() {
-
-    let drinkList = [
-      {
-        name: "coke",
-        count: 100,
-        imgSrc: "",
-      }
-    ]
-
     return (
       <div className="App">
         <Inventory
-          drinkList={drinkList}/>
+          getDrinksList={() => {return this.drinkListReq.send()}}
+          updateDrinkQuantity={
+            (event, drink) => {
+              event.preventDefault();
+              this.updateDrinkReq.send({"drinkName":drink.name, "quantity":drink.quantity});
+            }
+          }
+        />
       </div>
     );
   }

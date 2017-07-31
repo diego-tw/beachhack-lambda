@@ -1,20 +1,14 @@
 import React from 'react';
-import AddDrinkForm from './AddDrinkForm';
+import PropTypes from 'prop-types';
 
 class DrinksInventory extends React.Component{
 
-  constructor() {
+  constructor(props) {
     super();
-
+    const drinksList = props.getDrinksList();
+    console.log(drinksList);
     this.state = {
-      drinkList :
-      [
-        {
-          name: "coke",
-          quantity: 0,
-          imgSrc: "",
-        }
-      ]
+      srinksList: drinksList,
     }
   }
 
@@ -31,22 +25,17 @@ class DrinksInventory extends React.Component{
               </tr>
               <tr>
                 <td>
-                  <button>+</button>
+                  <button onClick={event => this.setState(this.props.updateDrinkQuantity(event, drink))} value="1">+</button>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <input type="number" className="counter" value={drink.quantity} onChange={event => this.updateDrink(event, drink)}/>
+                  {drink.name}: {drink.quantity}
                 </td>
               </tr>
               <tr>
                 <td>
-                  {drink.name}
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <button>-</button>
+                  <button onClick={event => this.setState(this.props.updateDrinkQuantity(event, drink))} value="-1">-</button>
                 </td>
               </tr>
             </tbody>
@@ -56,32 +45,24 @@ class DrinksInventory extends React.Component{
     );
   }
 
-  updateDrink = (event, drink) => {
-    event.preventDefault();
-
-    this.setState({
-      drinkList: [
-        {
-          name: drink.name,
-          quantity: event.target.value,
-          imgSrc: drink.imgSrc,
-        }
-      ]
-    });
-  }
-
   render() {
     return(
       <div>
         <h2>Inventory</h2>
         <table>
           <tbody>
-            {this.state.drinkList.map(drink => this.displayDrinks(drink))}
+            {this.state.drinksList.forEach(drink => this.displayDrinks(drink))}
           </tbody>
         </table>
       </div>
     );
   }
+}
+
+DrinksInventory.propTypes = {
+  getDrinksList: PropTypes.func.isRequired,
+  updateDrinkQuantity: PropTypes.func.isRequired,
+  drinksList: PropTypes.arrayOf(PropTypes.object),
 }
 
 DrinksInventory.defaultProps = {
