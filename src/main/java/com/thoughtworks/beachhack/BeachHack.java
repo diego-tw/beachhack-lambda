@@ -46,8 +46,11 @@ public class BeachHack implements RequestHandler<DrinkStock, Map<String, Integer
 
 
     protected void checkStockLevelIfNeeded(DrinkStock drinkStock, int levelChange) {
+        if (drinkStock == null) {
+            return;
+        }
         if (drinkStock.getQuantity() > drinkStock.getAlertThreshold() && drinkStock.getQuantity() + levelChange <= drinkStock.getAlertThreshold()) {
-            alertService.alertLowStockLevel(drinkStock.getDrinkName(), drinkStock.getQuantity()+levelChange);
+            alertService.alertLowStockLevel(drinkStock.getDrinkName(), drinkStock.getQuantity() + levelChange);
         }
     }
 

@@ -76,6 +76,15 @@ public class BeachHackTest {
         validateStockLevelCheckRule(1, 2, 2, false);
     }
 
+    @Test
+    public void handleRequestDoesNotCheckStockLevel_whenNewDrink() throws Exception {
+
+        when(drinkInventory.getDrinkStock(anyString())).thenReturn(null);
+
+        beachHack.handleRequest(new DrinkStock("TestDrink", 1), context);
+
+        verify(alertService, never()).alertLowStockLevel(any(), anyInt());
+    }
 
     private void validateStockLevelCheckRule(int currentStockLevel, int increase, int alertTreshold, boolean shouldRaiseAlert) throws Exception {
         Map<String, DrinkStock> inventory = new HashMap<>();
@@ -87,10 +96,9 @@ public class BeachHackTest {
         beachHack.handleRequest(new DrinkStock(campariStock.getDrinkName(), increase), context);
 
         if (shouldRaiseAlert) {
-            verify(alertService).alertLowStockLevel(campariStock.getDrinkName(), campariStock.getQuantity()+increase);
-        }
-        else {
-            verify(alertService, never()).alertLowStockLevel(any(),anyInt());
+            verify(alertService).alertLowStockLevel(campariStock.getDrinkName(), campariStock.getQuantity() + increase);
+        } else {
+            verify(alertService, never()).alertLowStockLevel(any(), anyInt());
         }
     }
 
