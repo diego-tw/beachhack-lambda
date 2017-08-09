@@ -31,6 +31,7 @@ public class BeachHack implements RequestHandler<DrinkStock, Map<String, Integer
     @Override
     public Map<String, Integer> handleRequest(DrinkStock delta, Context context) {
 
+        //logService.info
         logService.log(LogLevel.INFO, "Got a stock change for drink " + delta.getDrinkName() + " changed by " + delta.getQuantity());
 
         if (delta.getDrinkName() == null || delta.getQuantity() == null) {
