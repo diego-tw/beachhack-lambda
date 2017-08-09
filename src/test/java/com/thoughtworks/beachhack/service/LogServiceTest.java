@@ -59,6 +59,46 @@ public class LogServiceTest {
         verify(elasticSearchClient).sendDocumentToElasticSearch(any(), eq("foobar"), eq(expectedMessage));
     }
 
+    @Test
+    public void infoShouldSendCorrectMessageToElasticSearch() {
+        when(idGenerator.generate()).thenReturn("foobar");
+
+        logService.info("This is an info message");
+
+        String expectedMessage = createLogEntryMessage(LogLevel.INFO, "This is an info message", "foobar");
+        verify(elasticSearchClient).sendDocumentToElasticSearch(any(), eq("foobar"), eq(expectedMessage));
+    }
+
+    @Test
+    public void debugShouldSendCorrectMessageToElasticSearch() {
+        when(idGenerator.generate()).thenReturn("foobar");
+
+        logService.debug("This is a debug message");
+
+        String expectedMessage = createLogEntryMessage(LogLevel.DEBUG, "This is a debug message", "foobar");
+        verify(elasticSearchClient).sendDocumentToElasticSearch(any(), eq("foobar"), eq(expectedMessage));
+    }
+
+    @Test
+    public void errorShouldSendCorrectMessageToElasticSearch() {
+        when(idGenerator.generate()).thenReturn("foobar");
+
+        logService.error("This is an error message");
+
+        String expectedMessage = createLogEntryMessage(LogLevel.ERROR, "This is an error message", "foobar");
+        verify(elasticSearchClient).sendDocumentToElasticSearch(any(), eq("foobar"), eq(expectedMessage));
+    }
+
+    @Test
+    public void fatalShouldSendCorrectMessageToElasticSearch() {
+        when(idGenerator.generate()).thenReturn("foobar");
+
+        logService.fatal("This is a fatal error message");
+
+        String expectedMessage = createLogEntryMessage(LogLevel.FATAL, "This is a fatal error message", "foobar");
+        verify(elasticSearchClient).sendDocumentToElasticSearch(any(), eq("foobar"), eq(expectedMessage));
+    }
+
     private String createLogEntryMessage(LogLevel logLevel, String message, String id) {
         LogEntry logEntry = new LogEntry()
                 .setId(id)

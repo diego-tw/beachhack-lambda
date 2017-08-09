@@ -90,12 +90,19 @@ public class BeachHackTest {
     public void handleRequestShouldLogRequestToChangeDrinkState() throws Exception {
         beachHack.handleRequest(new DrinkStock("TestDrink", 1), context);
 
-        verify(logService).log(LogLevel.INFO, "Got a stock change for drink TestDrink changed by 1");
+        verify(logService).info("Got a stock change for drink TestDrink changed by 1");
     }
 
-    private void validateStockLevelCheckRule(int currentStockLevel, int increase, int alertTreshold, boolean shouldRaiseAlert) throws Exception {
+    @Test
+    public void handleRequestShouldLogErrorWithNullDrinkName() throws Exception {
+        beachHack.handleRequest(new DrinkStock(null, 1), context);
+
+        verify(logService).error("Null value of drinkName or quantity: no update");
+    }
+
+    private void validateStockLevelCheckRule(int currentStockLevel, int increase, int alertThreshold, boolean shouldRaiseAlert) throws Exception {
         Map<String, DrinkStock> inventory = new HashMap<>();
-        DrinkStock campariStock = new DrinkStock("Campari", currentStockLevel, alertTreshold);
+        DrinkStock campariStock = new DrinkStock("Campari", currentStockLevel, alertThreshold);
         inventory.put(campariStock.getDrinkName(), campariStock);
 
         when(drinkInventory.getDrinkStock(campariStock.getDrinkName())).thenReturn(campariStock);
@@ -104,6 +111,7 @@ public class BeachHackTest {
 
         if (shouldRaiseAlert) {
             verify(alertService).alertLowStockLevel(campariStock.getDrinkName(), campariStock.getQuantity() + increase);
+            verify(logService).warn("Low stock alert for drink Campari: " + (campariStock.getQuantity() + increase) + " remaining");
         } else {
             verify(alertService, never()).alertLowStockLevel(any(), anyInt());
         }
