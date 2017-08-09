@@ -4,8 +4,10 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.thoughtworks.beachhack.model.DrinkStock;
+import com.thoughtworks.beachhack.model.LogLevel;
 import com.thoughtworks.beachhack.service.DrinkInventory;
 import com.thoughtworks.beachhack.service.DrinkStockAlertService;
+import com.thoughtworks.beachhack.service.LogService;
 
 import java.util.Map;
 
@@ -13,34 +15,34 @@ public class BeachHack implements RequestHandler<DrinkStock, Map<String, Integer
 
     private final DrinkInventory inventory;
     private final DrinkStockAlertService alertService;
+    private final LogService logService;
 
 
     public BeachHack() {
-        this.inventory = new DrinkInventory();
-        this.alertService = new DrinkStockAlertService();
+        this(new DrinkInventory(), new DrinkStockAlertService(), new LogService());
     }
 
-    public BeachHack(DrinkInventory inventory, DrinkStockAlertService alertService) {
+    public BeachHack(DrinkInventory inventory, DrinkStockAlertService alertService, LogService logService) {
         this.inventory = inventory;
         this.alertService = alertService;
+        this.logService = logService;
     }
 
     @Override
     public Map<String, Integer> handleRequest(DrinkStock delta, Context context) {
 
-        LambdaLogger logger = context.getLogger();
-        logger.log("Got a stock change for drink " + delta.getDrinkName() + " changed by " + delta.getQuantity());
+        logService.log(LogLevel.INFO, "Got a stock change for drink " + delta.getDrinkName() + " changed by " + delta.getQuantity());
 
         if (delta.getDrinkName() == null || delta.getQuantity() == null) {
-            logger.log("Null value of drinkName or quantity: no update");
+            logService.log(LogLevel.INFO,"Null value of drinkName or quantity: no update");
         } else {
-            logger.log("Checking stock level to see if we need to raise a low-stock alert");
+            logService.log(LogLevel.INFO,"Checking stock level to see if we need to raise a low-stock alert");
             DrinkStock drinkStock = inventory.getDrinkStock(delta.getDrinkName());
             checkStockLevelIfNeeded(drinkStock, delta.getQuantity());
             inventory.updateInventory(delta.getDrinkName(), delta.getQuantity());
         }
 
-        logger.log("Returning full inventory: " + inventory.getInventoryMap());
+        logService.log(LogLevel.INFO,"Returning full inventory: " + inventory.getInventoryMap());
         return inventory.getInventoryMap();
     }
 

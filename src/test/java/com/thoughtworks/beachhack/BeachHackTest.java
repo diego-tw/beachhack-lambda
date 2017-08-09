@@ -3,8 +3,10 @@ package com.thoughtworks.beachhack;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.thoughtworks.beachhack.model.DrinkStock;
+import com.thoughtworks.beachhack.model.LogLevel;
 import com.thoughtworks.beachhack.service.DrinkInventory;
 import com.thoughtworks.beachhack.service.DrinkStockAlertService;
+import com.thoughtworks.beachhack.service.LogService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,15 +33,13 @@ public class BeachHackTest {
     private DrinkStockAlertService alertService;
 
     @Mock
-    private LambdaLogger logger;
+    private LogService logService;
 
     private BeachHack beachHack;
 
     @Before
     public void setUp() throws Exception {
-        when(context.getLogger()).thenReturn(logger);
-
-        beachHack = new BeachHack(drinkInventory, alertService);
+        beachHack = new BeachHack(drinkInventory, alertService, logService);
     }
 
     @Test
@@ -84,6 +84,13 @@ public class BeachHackTest {
         beachHack.handleRequest(new DrinkStock("TestDrink", 1), context);
 
         verify(alertService, never()).alertLowStockLevel(any(), anyInt());
+    }
+
+    @Test
+    public void handleRequestShouldLogRequestToChangeDrinkState() throws Exception {
+        beachHack.handleRequest(new DrinkStock("TestDrink", 1), context);
+
+        verify(logService).log(LogLevel.INFO, "Got a stock change for drink TestDrink changed by 1");
     }
 
     private void validateStockLevelCheckRule(int currentStockLevel, int increase, int alertTreshold, boolean shouldRaiseAlert) throws Exception {
