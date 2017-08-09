@@ -9,9 +9,12 @@ import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.http.AmazonHttpClient;
 import com.amazonaws.http.HttpMethodName;
 import com.amazonaws.regions.DefaultAwsRegionProviderChain;
+import org.apache.http.HttpHeaders;
+import org.apache.http.entity.ContentType;
 
 import java.io.ByteArrayInputStream;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -26,6 +29,8 @@ public class ElasticSearchClient {
         final String requestEndpoint = String.format("%s/%s/%s", ELASTIC_SEARCH_ENDPOINT, indexName, id);
 
         final Request<Void> request = new DefaultRequest<>(ELASTIC_SEARCH_SERVICE_NAME);
+        request.addHeader(HttpHeaders.CONTENT_ENCODING, StandardCharsets.UTF_8.name());
+        request.addHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
         request.setContent(new ByteArrayInputStream(payload.getBytes(UTF_8)));
         request.setEndpoint(URI.create(requestEndpoint));
         request.setHttpMethod(HttpMethodName.POST);
