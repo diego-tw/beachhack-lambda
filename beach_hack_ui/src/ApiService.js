@@ -1,5 +1,5 @@
-const buildDrinksListRequest = () => {
-    var httpRequest = createCORSRequest('GET', 'https://15toyx5nv6.execute-api.us-east-2.amazonaws.com/prod/DrinksInventoryLambda');
+const buildDrinksListRequest = (state) => {
+    var httpRequest = createCORSRequest('GET', 'https://15toyx5nv6.execute-api.us-east-2.amazonaws.com/prod/DrinksInventoryLambda', state);
     httpRequest.withCredentials = true;
     return httpRequest;
 };
@@ -10,8 +10,12 @@ const buildUpdateDrinkRequest = () => {
     return httpRequest;
 };
 
-const createCORSRequest = (method, url) => {
+const createCORSRequest = (method, url, state) => {
     var httpRequest = new XMLHttpRequest();
+
+    console.log(state);
+    httpRequest = addRequestResponse(httpRequest, state);
+
     if ("withCredentials" in httpRequest) {
         httpRequest.open(method, url, true);
     } else if (typeof XDomainRequest !== "undefined") {
@@ -22,20 +26,20 @@ const createCORSRequest = (method, url) => {
         console.log("withCredentials not supported")
     }
 
-    httpRequest = addRequestResponse(httpRequest);
 
     return httpRequest;
 };
 
-const addRequestResponse = httpRequest => {
+const addRequestResponse = (httpRequest, state) => {
     httpRequest.onloadstart = () => {
     };
 
     httpRequest.onload = () => {
 
         if (httpRequest.readyState === 4) {
-            if (httpRequest.status >= 200 && httpRequest.status <= 400) {
-                parseResponse(httpRequest.responseText);
+            if (httpRequest.status >= 200 || httpRequest.status <= 400) {
+                let drinkList = parseResponse(httpRequest.responseText);
+                state.setState({drinksList: drinkList});
             }
             else {
                 console.log("Response Text: " + httpRequest.responseText + httpRequest.status);
@@ -44,6 +48,7 @@ const addRequestResponse = httpRequest => {
     };
 
     httpRequest.onerror = () => {
+        console.log("Error with API call");
     };
 
     return httpRequest;
@@ -51,16 +56,22 @@ const addRequestResponse = httpRequest => {
 
 
 const parseResponse = responseData => {
-    console.log(responseData);
-
-    return Object.keys(responseData).map(drink => {
+    var responseJSON = JSON.parse(responseData);
+    return Object.keys(responseJSON).map(drink => {
         return {
             name: drink,
-            quantity: responseData[drink],
+            quantity: responseJSON[drink],
         };
     });
 };
 
-const ApiService = {buildUpdateDrinkRequest, buildDrinksListRequest}
+const sendRequest = state => {
+    console.log(state);
+    var httpRequest = buildDrinksListRequest(state);
+    httpRequest.send();
+
+};
+
+const ApiService = {buildUpdateDrinkRequest, buildDrinksListRequest, sendRequest}
 
 export default ApiService;
