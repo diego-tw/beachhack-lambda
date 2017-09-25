@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 class DrinksInventory extends React.Component{
 
   constructor(props) {
-    super();
+    super(props);
     const drinksList = props.getDrinksList();
-    console.log(drinksList);
+    console.log("Printing drink list:\n" + drinksList);
     this.state = {
-      srinksList: drinksList,
-    }
+      drinksList: drinksList === undefined ? [] : drinksList
+    };
   }
 
   displayDrinks = drink => {
@@ -66,7 +66,7 @@ DrinksInventory.propTypes = {
 }
 
 DrinksInventory.defaultProps = {
-  drinkList: {},
+  drinkList: [],
 }
 
 export default DrinksInventory;
