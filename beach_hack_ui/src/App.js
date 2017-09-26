@@ -8,7 +8,7 @@ class App extends Component {
         super();
 
         // this.drinkListReq = ApiService.buildDrinksListRequest();
-        this.updateDrinkReq = ApiService.buildUpdateDrinkRequest();
+        // this.updateDrinkReq = ApiService.buildUpdateDrinkRequest();
     }
 
     render() {
@@ -19,9 +19,11 @@ class App extends Component {
                     //     return ApiService.sendRequest(state);
                     // }}
                     updateDrinkQuantity={
-                        (event, drink) => {
+                        (that, event, drink, updateAmount) => {
                             event.preventDefault();
-                            this.updateDrinkReq.send({"drinkName": drink.name, "quantity": drink.quantity});
+                            var postInfo = JSON.stringify({drinkName: drink.name , quantity: updateAmount});
+                            this.updateDrinkReq = ApiService.buildUpdateDrinkRequest(that);
+                            this.updateDrinkReq.send(postInfo);
                         }
                     }
                 />

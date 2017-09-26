@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ApiService from "./ApiService";
 
+import './DrinksInventory.css';
+
 class DrinksInventory extends React.Component {
 
     constructor(props) {
@@ -33,13 +35,11 @@ class DrinksInventory extends React.Component {
         return (
             <tr key={drink.name}>
                 <td>
-                    <img src={drink.imageSrc} alt="logo"/>
-                </td>
-
-                <td>
                     <button
-                        // onClick={event => this.setState(this.props.updateDrinkQuantity(event, drink))}
-                        value="1"> +
+                        onClick={(event) => {
+                            this.props.updateDrinkQuantity(this, event, drink, 1);
+                        }}
+                        value="1">+
                     </button>
                 </td>
 
@@ -49,8 +49,10 @@ class DrinksInventory extends React.Component {
 
                 <td>
                     <button
-                        // onClick={event => this.setState(this.props.updateDrinkQuantity(event, drink))}
-                        value="-1"> -
+                        onClick={(event) => {
+                            this.props.updateDrinkQuantity(this, event, drink, -1)
+                        }}
+                        value="-1">-
                     </button>
                 </td>
             </tr>
