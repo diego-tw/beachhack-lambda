@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ApiService from "./ApiService";
+import Icons from './icons/Icons';
 
-import './DrinksInventory.css';
+
+import './styles/DrinksInventory.css';
+import AddDrinkForm from "./AddDrinkForm";
+import Navigation from "./Navigation";
+import ApiService from "./Services/ApiService";
 
 class DrinksInventory extends React.Component {
 
@@ -12,7 +16,6 @@ class DrinksInventory extends React.Component {
         this.state = {
             drinksList: drinksList,
         };
-        ApiService.sendRequest(this);
     }
 
     displayView = () => {
@@ -21,6 +24,12 @@ class DrinksInventory extends React.Component {
             display = (
                 <table>
                     <tbody>
+                    <tr>
+                        <th></th>
+                        <th>Drink</th>
+                        <th>Quantity</th>
+                        <th></th>
+                    </tr>
                     {this.state.drinksList.map((drink) => this.displayDrinks(drink))}
                     </tbody>
                 </table>
@@ -33,57 +42,101 @@ class DrinksInventory extends React.Component {
 
     displayDrinks = drink => {
         return (
-            <tr key={drink.name}>
-                <td>
-                    <button
-                        onClick={(event) => {
-                            this.props.updateDrinkQuantity(this, event, drink, 1);
-                        }}
-                        value="1">+
-                    </button>
-                </td>
-
-                <td>
-                    {drink.name}: {drink.quantity}
-                </td>
-
-                <td>
-                    <button
-                        onClick={(event) => {
-                            this.props.updateDrinkQuantity(this, event, drink, -1)
-                        }}
-                        value="-1">-
-                    </button>
-                </td>
-            </tr>
-
+            <DrinkItem key={drink.name + drink.quantity}
+                       drink={drink}
+                       adjustDrinkQuantity={
+                           (drink, amount) => {
+                               let postInfo = JSON.stringify({drinkName: drink.name, quantity: amount});
+                               ApiService.updateDrinksList(this, postInfo);
+                           }
+                       }
+            />
         );
     };
 
-    componentDidUpdate(prevProps, prevState) {
+    componentWillMount() {
+        ApiService.getDrinksList(this);
     }
+
 
     render() {
         let display = this.displayView();
         return (
             <div>
-                <h2>Inventory</h2>
-                <div id="drinks-table">{display}</div>
+                < div
+                    id="drinks-table"> {display}
+                </div>
             </div>
         );
     }
+
+    loadAddDrinkModule = () => {
+        return (<AddDrinkForm/>);
+    }
+}
+
+
+class DrinkItem extends React.Component {
+
+    constructor(props) {
+        super(props);
+        const {drink} = this.props;
+        this.state = {drink: drink};
+    }
+
+    adjustDrinkQuantity = (drink, amount) => {
+        this.props.adjustDrinkQuantity(drink, amount);
+    };
+
+    render() {
+        const {drink} = this.state;
+        return (
+
+            <tr key={drink.name}>
+                <td>
+                    <button
+                        id="deduct-button"
+                        onClick={(event) => {
+                            event.preventDefault();
+                            this.adjustDrinkQuantity(drink, -1);
+                        }}
+                        value="-1"
+                    >
+                        <Icons icon='remove_circle'/>
+                    </button>
+                </td>
+                <td id="drink-name">
+                    {drink.name}
+                </td>
+                <td id="drink-quantity">
+                    {drink.quantity}
+                </td>
+                <td>
+                    <button id="plus-button"
+                            onClick={(event) => {
+                                event.preventDefault();
+                                this.adjustDrinkQuantity(drink, 1);
+                            }}
+                            value="1">
+                        <Icons icon='add_circle'/>
+
+                    </button>
+                </td>
+            </tr>
+        )
+    }
+}
+
+DrinkItem.propTypes = {
+    drink: PropTypes.object,
 }
 
 DrinksInventory
-    .propTypes = {
-    // getDrinksList: PropTypes.func.isRequired,
-    updateDrinkQuantity: PropTypes.func.isRequired,
-    drinksList: PropTypes.arrayOf(PropTypes.object),
-}
+    .propTypes = {};
 
 DrinksInventory
     .defaultProps = {
     drinkList: {},
-}
+};
 
 export default DrinksInventory;

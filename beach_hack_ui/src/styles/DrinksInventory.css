@@ -1,0 +1,62 @@
+table {
+    border-collapse: collapse;
+}
+
+li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+tr {
+    border: 1px rebeccapurple solid;
+}
+
+tr th {
+    background-color: crimson;
+}
+
+table, th, td {
+    /*border: 1px solid black;*/
+}
+
+#drinks-table {
+    display: inline-flex;
+}
+
+#drink-name {
+    font-size: 24px;
+}
+
+#drink-quantity {
+    font-size: 24px;
+}
+
+tbody {
+    border: 1px solid black;
+}
+
+button {
+    border: 0px;
+}
+
+#deduct-button, #plus-button{
+    background-color: transparent;
+    width: auto;
+    height: auto;
+}
+
+#deduct-button:hover, #plus-button:hover{
+    border-radius: 40px;
+}
+
+
+img {
+    font-size: 24px;
+}
+
+button:focus {
+    outline: none;
+}
