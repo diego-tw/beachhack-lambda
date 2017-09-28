@@ -8,6 +8,8 @@ import {
     Route
 } from 'react-router-dom'
 
+import './styles/Navigation.css'
+
 class Navigation extends React.Component {
 
     constructor(props) {
@@ -21,15 +23,16 @@ class Navigation extends React.Component {
 
         return (
             <div>
-                <nav>
+                <nav className="navigationBar">
                     <ul>
-                        <li><h3>{title}</h3></li>
-                        <li>
-                            <button onClick={() => {
-                                this.showAddDrink();
-                            }}>Add Drink
-                            </button>
-                        </li>
+                        <li id="title">{title}</li>
+                        <li><a href="/">Current Inventory</a> </li>
+                        <li><button
+                            className="addDrinkButton"
+                            id="add-drink-button"
+                            onClick={()=>{
+                            window.location.href = "/addDrink"
+                        }}>Add A Drink</button> </li>
                     </ul>
                 </nav>
                 <Router>
@@ -39,14 +42,9 @@ class Navigation extends React.Component {
                     </div>
                 </Router>
             </div>
-
         )
     }
 
-    showAddDrink = () => {
-        this.setState({title: "Add Drink"});
-        window.location.href = "/addDrink";
-    }
 }
 
 Navigation.propTypes = {

@@ -23,6 +23,16 @@ const updateDrinksList = (that, body) => {
     constructFetch(that, myInit);
 };
 
+const addNewDrink = (that, body) => {
+
+    let myInit = {
+        method: 'POST',
+        mode: 'cors',
+        body: body,
+    };
+    constructFetch(that, myInit);
+};
+
 const constructFetch = (that, init) => {
     fetch(URL, init)
         .then((response) => {
@@ -33,6 +43,10 @@ const constructFetch = (that, init) => {
         })
         .then((drinksList) => {
             that.setState({drinksList: drinksList});
+            if(that.state.hasSavedDrink !== undefined) that.setState({hasSavedDrink: true});
+        })
+        .catch((err) => {
+
         });
 };
 
@@ -46,6 +60,6 @@ const parseResponse = responseData => {
     });
 };
 
-const ApiService = {updateDrinksList, getDrinksList}
+const ApiService = {updateDrinksList, getDrinksList, addNewDrink};
 
 export default ApiService;

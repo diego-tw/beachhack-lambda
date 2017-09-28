@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Icons from './icons/Icons';
+import Icons from '../resources/icons/Icons';
 
 
 import './styles/DrinksInventory.css';
 import AddDrinkForm from "./AddDrinkForm";
-import Navigation from "./Navigation";
-import ApiService from "./Services/ApiService";
+import ApiService from "../Services/ApiService";
+
+
 
 class DrinksInventory extends React.Component {
 

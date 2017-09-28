@@ -1,0 +1,28 @@
+nav {
+    background-color: gray;
+
+}
+
+#title {
+    font-size: 18px;
+}
+
+li {
+    display: inline;
+    background-color: transparent;
+    padding: 10px 10px;
+}
+
+a:visited {
+    color: lightgray;
+}
+
+#add-drink-button {
+    border-radius: 10px;
+    color: lightskyblue;
+    background-color: rgba(26,20,25,0.91);
+}
+
+#add-drink-button:hover {
+    background-color: lightgray;
+}

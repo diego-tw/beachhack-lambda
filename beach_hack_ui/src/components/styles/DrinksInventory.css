@@ -2,14 +2,6 @@ table {
     border-collapse: collapse;
 }
 
-li {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-}
-
 tr {
     border: 1px rebeccapurple solid;
 }
