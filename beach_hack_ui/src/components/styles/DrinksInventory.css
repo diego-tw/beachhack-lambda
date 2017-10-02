@@ -1,54 +1,39 @@
+#main-body {
+    width: auto;
+    border: 10px solid #44007F;
+}
+
 table {
     border-collapse: collapse;
+    color: #9E31FF;
+    font-size: 36px;
+    margin: 0 auto;
+
 }
 
 tr {
-    border: 1px rebeccapurple solid;
+    border: 1px #9E31FF solid;
 }
 
 tr th {
-    background-color: crimson;
-}
-
-table, th, td {
-    /*border: 1px solid black;*/
-}
-
-#drinks-table {
-    display: inline-flex;
-}
-
-#drink-name {
-    font-size: 24px;
-}
-
-#drink-quantity {
-    font-size: 24px;
-}
-
-tbody {
-    border: 1px solid black;
-}
-
-button {
-    border: 0px;
+    background-color: #44007F;
+    font-size: 40px;
 }
 
 #deduct-button, #plus-button{
+    border: 0;
     background-color: transparent;
     width: auto;
     height: auto;
 }
 
 #deduct-button:hover, #plus-button:hover{
-    border-radius: 40px;
+    border-radius: 20px;
 }
 
-
-img {
-    font-size: 24px;
-}
-
-button:focus {
-    outline: none;
+#spinner {
+    position: absolute;
+    margin-left: 48%;
+    margin-top: 25%;
+    z-index: 2;
 }

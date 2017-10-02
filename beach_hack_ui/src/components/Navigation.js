@@ -14,34 +14,37 @@ class Navigation extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = ({title: "Inventory"});
+        this.state = ({title: "Current Inventory"});
     }
 
     render() {
-
-        const {title} = this.state;
 
         return (
             <div>
                 <nav className="navigationBar">
                     <ul>
-                        <li id="title">{title}</li>
-                        <li><a href="/">Current Inventory</a> </li>
-                        <li><button
-                            className="addDrinkButton"
-                            id="add-drink-button"
-                            onClick={()=>{
-                            window.location.href = "/addDrink"
-                        }}>Add A Drink</button> </li>
+                        <li id="title"><a href="/">Current Inventory</a></li>
+                        <li>
+                            <button
+                                className="addDrinkButton"
+                                id="add-drink-button"
+                                onClick={() => {
+                                    window.location.href = "/addDrink"
+                                }}>Add A Drink
+                            </button>
+                        </li>
                     </ul>
                 </nav>
-                <Router>
-                    <div>
-                        <Route exact path="/" component={DrinksInventory} />
-                        <Route path="/addDrink" component={AddDrinkForm} />
-                    </div>
-                </Router>
+                <div id="main-content">
+                    <Router>
+                        <div>
+                            <Route exact path="/" component={DrinksInventory}/>
+                            <Route path="/addDrink" component={AddDrinkForm}/>
+                        </div>
+                    </Router>
+                </div>
             </div>
+
         )
     }
 

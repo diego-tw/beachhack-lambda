@@ -9,6 +9,7 @@ var config = {
         filename: 'bundle.js'
     },
     module: {
+        entry: ["babel-polyfill", "./app/js"],
         loaders: [
 
             { test: /\.js$/, loaders: ['babel'], exclude: /node_modules/ }

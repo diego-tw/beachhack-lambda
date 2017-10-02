@@ -1,0 +1,33 @@
+#add-drink-body {
+    margin: 0 auto;
+    width: 40%;
+}
+
+input {
+    font-size: 30px;
+    display: block;
+    margin: 20px;
+}
+
+#save-drink-button {
+    color: #9E31FF;
+    background-color: #44007F;
+    border-radius: 5px;
+    display: inline-block;
+    font-size: 30px;
+    padding: 10px;
+    border: 0px;
+}
+
+#drink-name-error-field, #drink-quantity-error-field {
+    color: #4C0000;
+}
+
+.hidden {
+    font-size: 0px;
+}
+
+.display {
+    font-size: 16px;
+
+}

@@ -6,44 +6,66 @@ import {
     Redirect
 } from 'react-router-dom'
 
+import './styles/AddDrinkForm.css'
+
 
 class AddDrinkForm extends Component {
 
     constructor(props) {
         super(props);
-        let drink = {drinkName: null, quantity: null};
         this.state = ({
-            drink: drink,
-            hasSavedDrink: false
+            drinkName: '',
+            drinkQuantity: 0,
+            hasSavedDrink: false,
+            displayDrinkNameError: 'hidden',
+            displayDrinkQuantityError: 'hidden'
         });
     }
 
-    createDrink = (event, drink) => {
+    createDrink = (event) => {
         event.preventDefault();
-        let postInfo = JSON.stringify({drinkName: drink.name, quantity: drink.quantity});
+        this.cleanErrors();
+
+        if (this.state.drinkName === 0) {
+            this.setState({displayDrinkNameError: 'display'});
+            return;
+        }
+        if (this.state.drinkQuantity <= 0) {
+            this.setState({displayDrinkQuantityError: 'display'});
+            return;
+        }
+        let postInfo = JSON.stringify({drinkName: this.state.drinkName, quantity: this.state.drinkQuantity});
         ApiService.addNewDrink(this, postInfo);
     };
 
+    cleanErrors() {
+        this.setState({
+            displayDrinkNameError: 'hidden',
+            displayDrinkQuantityError: 'hidden'
+        })
+    }
+
     render() {
-
-        let drink = {
-            name: "",
-            quantity: 0,
-        };
-
         const {hasSavedDrink} = this.state;
 
         return (
-            <div>
+            <div id="add-drink-body">
                 {hasSavedDrink ? <Redirect to=""/> :
-                    <form className="newDrink" onSubmit={(event) => this.createDrink(event, drink)}>
-                        <input type="text" placeholder="Drink Name" onChange={event => {
-                            drink.name = event.target.value
+                    <form className="newDrink" onSubmit={(event) => this.createDrink(event)}>
+                        <input required id="drink-name-input" type="text" placeholder="Drink Name" onChange={event => {
+                            this.setState({drinkName: event.target.value})
                         }}/>
-                        <input type="number" placeholder="Drink Count" onChange={event => {
-                            drink.quantity = event.target.value
-                        }}/>
-                        <button type="submit"> Add Drink</button>
+                        <text className={this.state.displayDrinkNameError} id="drink-name-error-field">Error: Please
+                            enter name for drink e.g Coke
+                        </text>
+                        <input required id="drink-quantity-input" type="number" placeholder="Drink Quantity"
+                               onChange={event => {
+                                   this.setState({drinkQuantity: event.target.value})
+                               }}/>
+                        <text className={this.state.displayDrinkQuantityError} id="drink-quantity-error-field">Error:
+                            Please enter valid quantity for drink e.g 2
+                        </text>
+                        <button id="save-drink-button" type="submit"> Add Drink</button>
                     </form>
                 }
             </div>

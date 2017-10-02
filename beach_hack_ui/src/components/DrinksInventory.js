@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Icons from '../resources/icons/Icons';
 
-
+import DrinkItem from './DrinkItem';
 import './styles/DrinksInventory.css';
-import AddDrinkForm from "./AddDrinkForm";
 import ApiService from "../Services/ApiService";
 
+import  Spinner from 'react-spinkit';
 
 
 class DrinksInventory extends React.Component {
@@ -16,11 +15,13 @@ class DrinksInventory extends React.Component {
         var drinksList = undefined;
         this.state = {
             drinksList: drinksList,
+            updatingQuantity: false
         };
     }
 
     displayView = () => {
         let display = null;
+
         if (this.state.drinksList !== undefined) {
             display = (
                 <table>
@@ -36,7 +37,12 @@ class DrinksInventory extends React.Component {
                 </table>
             );
         } else {
-            display = (<h3>Loading drinks....</h3>);
+            display = (
+                <div>
+                    <h3>Loading drinks....</h3>
+                    <Spinner id="spinner" name="wandering-cubes" color="blue" fadeIn="none"/>
+                </div>
+            );
         }
         return display;
     };
@@ -48,7 +54,9 @@ class DrinksInventory extends React.Component {
                        adjustDrinkQuantity={
                            (drink, amount) => {
                                let postInfo = JSON.stringify({drinkName: drink.name, quantity: amount});
+                               this.setState({updatingQuantity: true});
                                ApiService.updateDrinksList(this, postInfo);
+
                            }
                        }
             />
@@ -63,80 +71,31 @@ class DrinksInventory extends React.Component {
     render() {
         let display = this.displayView();
         return (
-            <div>
-                < div
-                    id="drinks-table"> {display}
+            <div className="main-body">
+                <div
+                    id="drinks-table">
+                    {this.state.updatingQuantity ?
+                        <Spinner
+                            id="spinner"
+                            name="pacman"
+                            color="blue"
+                            fadeIn="none"
+                        /> : null
+                    }
+                    {display}
+
+
                 </div>
             </div>
         );
     }
 
-    loadAddDrinkModule = () => {
-        return (<AddDrinkForm/>);
-    }
 }
 
 
-class DrinkItem extends React.Component {
+DrinksInventory.propTypes = {};
 
-    constructor(props) {
-        super(props);
-        const {drink} = this.props;
-        this.state = {drink: drink};
-    }
-
-    adjustDrinkQuantity = (drink, amount) => {
-        this.props.adjustDrinkQuantity(drink, amount);
-    };
-
-    render() {
-        const {drink} = this.state;
-        return (
-
-            <tr key={drink.name}>
-                <td>
-                    <button
-                        id="deduct-button"
-                        onClick={(event) => {
-                            event.preventDefault();
-                            this.adjustDrinkQuantity(drink, -1);
-                        }}
-                        value="-1"
-                    >
-                        <Icons icon='remove_circle'/>
-                    </button>
-                </td>
-                <td id="drink-name">
-                    {drink.name}
-                </td>
-                <td id="drink-quantity">
-                    {drink.quantity}
-                </td>
-                <td>
-                    <button id="plus-button"
-                            onClick={(event) => {
-                                event.preventDefault();
-                                this.adjustDrinkQuantity(drink, 1);
-                            }}
-                            value="1">
-                        <Icons icon='add_circle'/>
-
-                    </button>
-                </td>
-            </tr>
-        )
-    }
-}
-
-DrinkItem.propTypes = {
-    drink: PropTypes.object,
-}
-
-DrinksInventory
-    .propTypes = {};
-
-DrinksInventory
-    .defaultProps = {
+DrinksInventory.defaultProps = {
     drinkList: {},
 };
 

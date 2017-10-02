@@ -44,6 +44,8 @@ const constructFetch = (that, init) => {
         .then((drinksList) => {
             that.setState({drinksList: drinksList});
             if(that.state.hasSavedDrink !== undefined) that.setState({hasSavedDrink: true});
+            that.setState({updatingQuantity: false});
+
         })
         .catch((err) => {
 
