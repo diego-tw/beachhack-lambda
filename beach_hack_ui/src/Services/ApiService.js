@@ -9,7 +9,7 @@ const getDrinksList = (that) => {
         mode: 'cors',
     };
 
-    constructFetch(that, myInit);
+    return constructFetch(that, myInit);
 
 };
 
@@ -20,7 +20,7 @@ const updateDrinksList = (that, body) => {
         mode: 'cors',
         body: body,
     };
-    constructFetch(that, myInit);
+    return constructFetch(that, myInit);
 };
 
 const addNewDrink = (that, body) => {
@@ -30,25 +30,16 @@ const addNewDrink = (that, body) => {
         mode: 'cors',
         body: body,
     };
-    constructFetch(that, myInit);
+    return constructFetch(that, myInit);
 };
 
 const constructFetch = (that, init) => {
-    fetch(URL, init)
+    return fetch(URL, init)
         .then((response) => {
             return response.json();
         })
         .then((drinksListJSON) => {
             return parseResponse(drinksListJSON);
-        })
-        .then((drinksList) => {
-            that.setState({drinksList: drinksList});
-            if(that.state.hasSavedDrink !== undefined) that.setState({hasSavedDrink: true});
-            that.setState({updatingQuantity: false});
-
-        })
-        .catch((err) => {
-
         });
 };
 

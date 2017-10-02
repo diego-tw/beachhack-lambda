@@ -1,23 +1,28 @@
 #main-body {
     width: auto;
-    border: 10px solid #44007F;
+    border: 10px solid #00697F;
 }
 
 table {
     border-collapse: collapse;
-    color: #9E31FF;
+    color: #47DEFF;
     font-size: 36px;
     margin: 0 auto;
 
 }
 
 tr {
-    border: 1px #9E31FF solid;
+    border: 1px #47DEFF solid;
 }
 
 tr th {
-    background-color: #44007F;
-    font-size: 40px;
+    background-color: #00697F;
+    font-size: 50px;
+}
+
+td {
+    height: 55px;
+    font-size: 60px;
 }
 
 #deduct-button, #plus-button{

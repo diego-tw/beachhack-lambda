@@ -35,7 +35,10 @@ class AddDrinkForm extends Component {
             return;
         }
         let postInfo = JSON.stringify({drinkName: this.state.drinkName, quantity: this.state.drinkQuantity});
-        ApiService.addNewDrink(this, postInfo);
+        let fetch = ApiService.addNewDrink(this, postInfo);
+        fetch.then( (drinksList) => {
+            this.setState({hasSavedDrink: true});
+        });
     };
 
     cleanErrors() {

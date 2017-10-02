@@ -3,14 +3,12 @@ import 'babel-polyfill';
 import React, {Component} from 'react';
 import './styles/App.css';
 
-import Navigation from './Navigation';
+import NavigationContainer from '../containers/NavigationContainer';
 
 import {
     BrowserRouter as Router,
     Route
 } from 'react-router-dom'
-
-
 
 class App extends Component {
 
@@ -19,7 +17,7 @@ class App extends Component {
             <div className="App">
                 <Router>
                     <div>
-                        <Route exact path="" component={Navigation}/>
+                        <Route exact path="" component={NavigationContainer}/>
                     </div>
                 </Router>
             </div>

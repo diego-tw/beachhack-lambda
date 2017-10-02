@@ -1,5 +1,5 @@
 nav {
-    background-color: #44007F;
+    background-color: #00697F;
     width: 100%;
     height: 80px;
     margin-bottom: 10px;
@@ -21,20 +21,20 @@ li {
 a {
     font-size: 38px;
     text-decoration: none;
-    color: #9E31FF;
+    color: #47DEFF;
     font-weight: bold;
 }
 
 
 #add-drink-button {
     border-radius: 10px;
-    color: #44007F;
-    background-color: #9E31FF;
-    height: 40px;
+    color: #00697F;
+    background-color: #47DEFF;
     font-size: 38px;
-    margin: 20px;
+    margin: 5px auto;
     float: right;
     border: 0px;
+    padding: 10px;
 }
 
 #add-drink-button:hover {
@@ -44,6 +44,6 @@ a {
 
 
 #main-content {
-    margin: 0 auto;
+    margin-bottom: 20px;
 
 }

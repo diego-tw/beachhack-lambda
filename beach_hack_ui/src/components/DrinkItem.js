@@ -52,7 +52,7 @@ class DrinkItem extends React.Component {
 
 DrinkItem.propTypes = {
     drink: PropTypes.object,
-    adjustDrinkQuantity: PropTypes.function
+    adjustDrinkQuantity: PropTypes.func
 };
 
 
