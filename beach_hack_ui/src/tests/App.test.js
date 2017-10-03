@@ -1,13 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from '../components/App';
+// import React from 'react';
+// import App from '../components/App';
 
-describe('App Component', () => {
-    it('renders without crashing', () => {
-        const div = document.createElement('div');
-        ReactDOM.render(<App/>, div);
-    });
+// import { expect } from 'chai';
+// import { mount, shallow } from 'enzyme';
+// import Adapter from 'enzyme-adapter-react-16';
 
-});
+// Enzyme.configure({ adapter: new Adapter() });
+
+// describe('<App />', () => {
+
+    // it('calls componentDidMount', () => {
+    //     const wrapper = shallow(<App />);
+    //     expect(App.prototype.componentDidMount.calledOnce).to.equal(true);
+    // });
+// });
 
 

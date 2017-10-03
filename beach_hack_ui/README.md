@@ -1,3 +1,16 @@
+##Stock Tracker UI
+
+The app is hosted in an S3 bucket and can be located at:
+http://com.thoughtworks.beachhack.web.s3-website.us-east-2.amazonaws.com/
+
+Trello: https://trello.com/invite/b/mJ9HH5yl/eed217e10bb7fdcdcdd03591b28270f5/stockroom-app
+
+####Uploading the app to prod
+1) Run npm run build on your local machine
+2) Upload all output located in the build folder the s3 bucket - the specific bucket is com.thoughtworks.beachhack.web 
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>

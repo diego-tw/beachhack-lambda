@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 
-import React, {Component} from 'react';
+import React from 'react';
 import './styles/App.css';
 
 import NavigationContainer from '../containers/NavigationContainer';
@@ -10,7 +10,7 @@ import {
     Route
 } from 'react-router-dom'
 
-class App extends Component {
+class App extends React.Component {
 
     render() {
         return (
