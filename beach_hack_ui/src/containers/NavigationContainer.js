@@ -11,6 +11,10 @@ class NavigationContainer extends React.Component {
         this.state = ({title: "Current Inventory"});
     }
 
+    componentDidMount(){
+
+    }
+
     render() {
         return (
             <Navigation

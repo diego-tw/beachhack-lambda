@@ -25,9 +25,9 @@ const DrinksInventory = (props) =>
             <table>
                 <tbody>
                 <tr>
-                    <th></th>
                     <th>Drink</th>
-                    <th>Quantity</th>
+                    <th></th>
+                    <th>Qty</th>
                     <th></th>
                 </tr>
                 {props.drinksList.map((drink) => displayDrinks(drink, props))}

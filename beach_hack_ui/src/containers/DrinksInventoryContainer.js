@@ -18,6 +18,10 @@ class DrinksInventoryContainer extends React.Component {
     }
 
     componentWillMount() {
+
+    }
+
+    componentDidMount() {
         let fetch = ApiService.getDrinksList(this);
         fetch.then((drinksList) => {
             this.setState({drinksList: drinksList});

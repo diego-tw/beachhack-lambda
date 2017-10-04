@@ -1,8 +1,9 @@
 import React from 'react';
 import NavigationContainer from '../containers/NavigationContainer';
 
-
+import sinon from 'sinon';
 import Enzyme, {mount, shallow, render} from 'enzyme';
+import {expect} from 'chai';
 
 
 import Adapter from 'enzyme-adapter-react-16';
@@ -11,27 +12,25 @@ Enzyme.configure({adapter: new Adapter()});
 
 import {MemoryRouter} from 'react-router-dom';
 
-describe('Navigation Component', () => {
+sinon.spy(NavigationContainer.prototype, 'componentDidMount');
 
-    it('renders without crashing', () => {
-        let wrapper = shallow(<NavigationContainer> <div /> </NavigationContainer>);
-        expect(1).to.equal();
+describe('Navigation Container', () => {
+
+    it('should mount componenet', () => {
+        const wrapper = mount(<NavigationContainer />);
+        expect(NavigationContainer.prototype.componentDidMount.calledOnce).to.equal(true);
     });
 
-    it('should load drinks inventory page by default', function () {
-        let wrapper = mount(<NavigationContainer/>);
-        expect(wrapper.text()).toContain('Loading drinks');
+    it('should have link to current inventory', () => {
+        let wrapper = shallow(<NavigationContainer> </NavigationContainer>);
+        expect(wrapper.html()).to.contain('href="/"');
     });
 
-    it('should load add drinks when requested', function () {
-        let wrapper
-            = mount(<MemoryRouter>
-                        <NavigationContainer/>
-                     </MemoryRouter>);
-        const addButton = wrapper.find('.addDrinkButton');
-        addButton.simulate('submit');
-        // expect(wrapper.find('.newDrink')).not.toBeTruthy();
+    it('should have link to add a drink page', function () {
+        let wrapper = shallow(<NavigationContainer />);
+        expect(wrapper.html()).to.contain('Add A Drink');
     });
+
 
 });
 

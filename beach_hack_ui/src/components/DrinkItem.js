@@ -17,6 +17,9 @@ class DrinkItem extends React.Component {
         return (
 
             <tr key={drink.name}>
+                <td id="drink-name">
+                    {drink.name}
+                </td>
                 <td>
                     <button
                         id="deduct-button"
@@ -28,9 +31,6 @@ class DrinkItem extends React.Component {
                     >
                         <Icons icon='remove_circle'/>
                     </button>
-                </td>
-                <td id="drink-name">
-                    {drink.name}
                 </td>
                 <td id="drink-quantity">
                     {drink.quantity}
