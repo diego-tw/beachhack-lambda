@@ -15,7 +15,7 @@ public class BeachHack implements RequestHandler<DrinkStock, Map<String, Integer
 
     private final DrinkInventory inventory;
     private final DrinkStockAlertService alertService;
-    private final LogService logService;
+//    private final LogService logService;
 
 
     public BeachHack() {
@@ -25,24 +25,24 @@ public class BeachHack implements RequestHandler<DrinkStock, Map<String, Integer
     public BeachHack(DrinkInventory inventory, DrinkStockAlertService alertService, LogService logService) {
         this.inventory = inventory;
         this.alertService = alertService;
-        this.logService = logService;
+//        this.logService = logService;
     }
 
     @Override
     public Map<String, Integer> handleRequest(DrinkStock delta, Context context) {
 
-        logService.info("Got a stock change for drink " + delta.getDrinkName() + " changed by " + delta.getQuantity());
+//        logService.info("Got a stock change for drink " + delta.getDrinkName() + " changed by " + delta.getQuantity());
 
         if (delta.getDrinkName() == null || delta.getQuantity() == null) {
-            logService.error("Null value of drinkName or quantity: no update");
+//            logService.error("Null value of drinkName or quantity: no update");
         } else {
-            logService.info("Checking stock level to see if we need to raise a low-stock alert");
+//            logService.info("Checking stock level to see if we need to raise a low-stock alert");
             DrinkStock drinkStock = inventory.getDrinkStock(delta.getDrinkName());
             checkStockLevelIfNeeded(drinkStock, delta.getQuantity());
             inventory.updateInventory(delta.getDrinkName(), delta.getQuantity());
         }
 
-        logService.info("Returning full inventory: " + inventory.getInventoryMap());
+//        logService.info("Returning full inventory: " + inventory.getInventoryMap());
         return inventory.getInventoryMap();
     }
 
@@ -53,7 +53,7 @@ public class BeachHack implements RequestHandler<DrinkStock, Map<String, Integer
         }
         if (drinkStock.getQuantity() > drinkStock.getAlertThreshold() && drinkStock.getQuantity() + levelChange <= drinkStock.getAlertThreshold()) {
             alertService.alertLowStockLevel(drinkStock.getDrinkName(), drinkStock.getQuantity() + levelChange);
-            logService.warn("Low stock alert for drink " + drinkStock.getDrinkName() + ": " + (drinkStock.getQuantity() + levelChange) + " remaining");
+//            logService.warn("Low stock alert for drink " + drinkStock.getDrinkName() + ": " + (drinkStock.getQuantity() + levelChange) + " remaining");
         }
     }
 

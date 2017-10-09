@@ -7,7 +7,9 @@ Trello: https://trello.com/invite/b/mJ9HH5yl/eed217e10bb7fdcdcdd03591b28270f5/st
 
 #### Uploading the app to prod
 1) Run npm run build on your local machine
-2) Upload all output located in the build folder the s3 bucket - the specific bucket is com.thoughtworks.beachhack.web 
+2) Upload all output located in the build folder the s3 bucket - the specific bucket is com.thoughtworks.beachhack.web
+
+Alternatively, if you would like to also deploy the AWS Lambda with the UI, you can use the instructions in the main README.md 
 
 ### Testing
 The testing for the app used Mocha/Chai and Enzyme
