@@ -1,4 +1,5 @@
 import 'whatwg-fetch';
+import _ from 'lodash';
 
 const URL = 'https://15toyx5nv6.execute-api.us-east-2.amazonaws.com/prod/DrinksInventoryLambda';
 
@@ -39,8 +40,10 @@ const constructFetch = (that, init) => {
             return response.json();
         })
         .then((drinksListJSON) => {
-            return parseResponse(drinksListJSON);
+            let response = parseResponse(drinksListJSON)
+            return _.sortBy(response, (drink) => {return drink.name});
         });
+
 };
 
 const parseResponse = responseData => {

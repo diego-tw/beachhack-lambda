@@ -27,7 +27,6 @@ class DrinksInventoryContainer extends React.Component {
             .then((drinksList) => {
                 this.setState({drinksList: drinksList});
                 this.setState({loadingDrinks: false});
-                console.log(drinksList);
 
             })
             .catch((error) => {
