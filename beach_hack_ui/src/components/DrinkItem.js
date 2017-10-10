@@ -33,7 +33,7 @@ class DrinkItem extends React.Component {
                     </button>
                 </td>
                 <td id="drink-quantity">
-                    {drink.quantity}
+                   {drink.quantity}
                 </td>
                 <td>
                     <button id="plus-button"

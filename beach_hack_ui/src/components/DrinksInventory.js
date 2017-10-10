@@ -16,13 +16,6 @@ const DrinksInventory = (props) =>
 
         :
         <div>
-            {props.updatingQuantity ?
-                <Spinner
-                    id="spinner"
-                    name="pacman"
-                    color="blue"
-                    fadeIn="none"
-                /> : null}
             <table>
                 <tbody>
                 <tr>

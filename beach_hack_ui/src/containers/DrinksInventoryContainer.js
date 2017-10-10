@@ -14,7 +14,8 @@ class DrinksInventoryContainer extends React.Component {
         this.state = {
             drinksList: drinksList,
             updatingQuantity: false,
-            loadingDrinks: true
+            loadingDrinks: true,
+            sortingType: "name"
         };
     }
 
@@ -26,7 +27,9 @@ class DrinksInventoryContainer extends React.Component {
         let fetch = ApiService.getDrinksList(this);
         fetch
             .then((drinksList) => {
-                this.setState({drinksList: drinksList});
+                let sortedDrinkList = this.sortDrinkList(drinksList);
+
+                this.setState({drinksList: sortedDrinkList});
                 this.setState({loadingDrinks: false});
 
             })
@@ -41,6 +44,7 @@ class DrinksInventoryContainer extends React.Component {
             return drink.quantity
         });
         this.setState({drinksList: sortedDrinksList});
+        this.setState({sortingType: "quantity"});
     }
 
     orderByName() {
@@ -49,6 +53,20 @@ class DrinksInventoryContainer extends React.Component {
             return drink.name
         });
         this.setState({drinksList: sortedDrinksList});
+        this.setState({sortingType: "name"});
+
+    }
+
+    sortDrinkList(drinkList) {
+        if (this.state.sortingType === "name") {
+            return _.sortBy(drinkList, (drink) => {
+                return drink.name;
+            });
+        } else {
+            return _.sortBy(drinkList, (drink) => {
+                return drink.quantity;
+            });
+        }
     }
 
     render() {
@@ -79,11 +97,32 @@ class DrinksInventoryContainer extends React.Component {
     adjustDrinkQuantity(drink, amount) {
         let postInfo = JSON.stringify({drinkName: drink.name, quantity: amount});
         this.setState({updatingQuantity: true});
+
+        let updatedAmount = drink.quantity + amount;
+        let {drinksList} = this.state;
+        // drinksList.get(drink.name).quantity = updatedAmount;
+        let updatedDrinksList = drinksList.map(drinkL => {
+            if (drinkL.name === drink.name) {
+                drinkL.quantity = updatedAmount;
+                return drinkL;
+            }
+            return drinkL;
+        });
+        let sortedDrinksList = this.sortDrinkList(updatedDrinksList);
+
+
+        this.setState({drinksList: sortedDrinksList});
+
         let fetch = ApiService.updateDrinksList(this, postInfo);
         fetch.then((drinksList) => {
-            this.setState({drinksList: drinksList})
+            // let sortedDrinksList = this.sortDrinkList(drinksList);
+
+            // this.setState({drinksList: sortedDrinksList})
             this.setState({updatingQuantity: false})
         })
+            .catch((err) => {
+                alert("ERROR: Cannot connect please check connection" );
+            })
     }
 
 }

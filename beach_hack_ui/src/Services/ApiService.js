@@ -40,8 +40,7 @@ const constructFetch = (that, init) => {
             return response.json();
         })
         .then((drinksListJSON) => {
-            let response = parseResponse(drinksListJSON)
-            return _.sortBy(response, (drink) => {return drink.name});
+            return parseResponse(drinksListJSON);
         });
 
 };
