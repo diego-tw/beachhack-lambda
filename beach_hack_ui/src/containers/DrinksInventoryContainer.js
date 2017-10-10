@@ -3,6 +3,7 @@ import React from 'react';
 import DrinksInventory from '../components/DrinksInventory';
 
 import ApiService from "../Services/ApiService";
+import _ from 'lodash';
 
 
 class DrinksInventoryContainer extends React.Component {
@@ -34,6 +35,22 @@ class DrinksInventoryContainer extends React.Component {
             });
     }
 
+    orderByQuantity() {
+        let {drinksList} = this.state;
+        let sortedDrinksList = _.sortBy(drinksList, (drink) => {
+            return drink.quantity
+        });
+        this.setState({drinksList: sortedDrinksList});
+    }
+
+    orderByName() {
+        let {drinksList} = this.state;
+        let sortedDrinksList = _.sortBy(drinksList, (drink) => {
+            return drink.name
+        });
+        this.setState({drinksList: sortedDrinksList});
+    }
+
     render() {
         return (
             <div className="main-body">
@@ -46,6 +63,12 @@ class DrinksInventoryContainer extends React.Component {
                             (drink, amount) => {
                                 this.adjustDrinkQuantity(drink, amount)
                             }
+                        }
+                        orderByQuantity={
+                            () => this.orderByQuantity()
+                        }
+                        orderByName={
+                            () => this.orderByName()
                         }
                     />
                 </div>

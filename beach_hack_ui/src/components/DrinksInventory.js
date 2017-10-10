@@ -4,6 +4,7 @@ import DrinkItem from './DrinkItem';
 import './styles/DrinksInventory.css';
 
 import Spinner from 'react-spinkit';
+import Icons from '../resources/icons/Icons';
 
 
 const DrinksInventory = (props) =>
@@ -25,9 +26,25 @@ const DrinksInventory = (props) =>
             <table>
                 <tbody>
                 <tr>
-                    <th>Drink</th>
+                    <th id="drink-name-title">
+                        <button onClick={(event) => {
+                            event.preventDefault();
+                            props.orderByName();
+                        }}>Drink
+                            <Icons color="#000000" icon='down_arrow'/>
+
+                        </button>
+                    </th>
                     <th></th>
-                    <th>Qty</th>
+                    <th id="drink-qty-title">
+                        <button onClick={(event) => {
+                            event.preventDefault();
+                            props.orderByQuantity();
+                        }}>Qty <Icons
+                            color="#000000"
+                            icon='down_arrow'/>
+                        </button>
+                    </th>
                     <th></th>
                 </tr>
                 {props.drinksList.map((drink) => displayDrinks(drink, props))}

@@ -3,14 +3,12 @@ package com.thoughtworks.beachhack;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import com.thoughtworks.beachhack.model.DrinkStock;
 import com.thoughtworks.beachhack.model.LogLevel;
 import com.thoughtworks.beachhack.service.DrinkInventory;
 import com.thoughtworks.beachhack.service.DrinkStockAlertService;
 import com.thoughtworks.beachhack.service.LogService;
 
-import java.net.SocketTimeoutException;
 import java.util.Map;
 import java.util.stream.Collectors;
 

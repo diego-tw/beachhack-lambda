@@ -15,7 +15,7 @@ tr {
     border: 1px #47DEFF solid;
 }
 
-tr th {
+tr th{
     background-color: #00697F;
     font-size: 50px;
 }
@@ -23,6 +23,14 @@ tr th {
 td {
     height: 55px;
     font-size: 60px;
+}
+
+button {
+    border: 1px;
+    background-color: #00697F;
+    font-size: 50px;
+    color: #47DEFF;
+
 }
 
 #deduct-button, #plus-button{

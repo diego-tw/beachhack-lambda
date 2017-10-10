@@ -20,7 +20,7 @@ class DrinkItem extends React.Component {
                 <td id="drink-name">
                     {drink.name}
                 </td>
-                <td>
+                <td >
                     <button
                         id="deduct-button"
                         onClick={(event) => {
@@ -29,7 +29,7 @@ class DrinkItem extends React.Component {
                         }}
                         value="-1"
                     >
-                        <Icons icon='remove_circle'/>
+                        <Icons size={64} icon='remove_circle'/>
                     </button>
                 </td>
                 <td id="drink-quantity">
@@ -42,7 +42,7 @@ class DrinkItem extends React.Component {
                                 this.props.adjustDrinkQuantity(drink, 1);
                             }}
                             value="1">
-                        <Icons icon='add_circle'/>
+                        <Icons size={64} icon='add_circle'/>
                     </button>
                 </td>
             </tr>
