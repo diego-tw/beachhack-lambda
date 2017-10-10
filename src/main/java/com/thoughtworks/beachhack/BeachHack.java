@@ -54,8 +54,9 @@ public class BeachHack implements RequestHandler<DrinkStock, Map<String, Integer
         }
 
         Map<String, Integer> lowStock = inventory.entrySet().stream()
-                .filter(item -> item.getValue() <= DrinkStock.DEFAULT_ALERT_THRESHOLD + 1)
-                .collect(Collectors.toMap(drink -> drink.getKey(), drink -> drink.getValue()));
+                .map(item ->  this.inventory.getDrinkStock(item.getKey()))
+                .filter(item -> item.getQuantity() <= item.getAlertThreshold())
+                .collect(Collectors.toMap(drink -> drink.getDrinkName(), drink -> drink.getQuantity()));
 
         if (drinkStock.getQuantity() > drinkStock.getAlertThreshold() && drinkStock.getQuantity() + levelChange <= drinkStock.getAlertThreshold()) {
             alertService.alertLowStockLevel(lowStock, drinkStock.getDrinkName(), drinkStock.getQuantity() + levelChange);

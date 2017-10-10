@@ -22,10 +22,10 @@ public class DrinkStockAlertService {
     }
 
     public void alertLowStockLevel(Map<String, Integer> lowStock, String drinkName, int newStockLevel) {
-        String message = String.format("Current stock level for %s is %d \nOther low stock: \n ", drinkName, newStockLevel);
+        String message = String.format("Current stock level for %s is %d \n\n\nOther low stock: \n", drinkName, newStockLevel);
         message += lowStock.entrySet().stream()
                 .map(map ->
-                    String.format("Drink: %s Quantity: %d\n", map.getKey(), map.getValue()))
+                    String.format("Drink: %s    Quantity: %d\n", map.getKey(), map.getValue()))
                 .collect(Collectors.joining());
 
         PublishRequest publishRequest = new PublishRequest()

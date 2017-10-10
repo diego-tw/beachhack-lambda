@@ -1,5 +1,4 @@
 import 'whatwg-fetch';
-import _ from 'lodash';
 
 const URL = 'https://15toyx5nv6.execute-api.us-east-2.amazonaws.com/prod/DrinksInventoryLambda';
 
