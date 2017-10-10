@@ -3,13 +3,16 @@ package com.thoughtworks.beachhack;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import com.thoughtworks.beachhack.model.DrinkStock;
 import com.thoughtworks.beachhack.model.LogLevel;
 import com.thoughtworks.beachhack.service.DrinkInventory;
 import com.thoughtworks.beachhack.service.DrinkStockAlertService;
 import com.thoughtworks.beachhack.service.LogService;
 
+import java.net.SocketTimeoutException;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BeachHack implements RequestHandler<DrinkStock, Map<String, Integer>> {
 
@@ -38,8 +41,8 @@ public class BeachHack implements RequestHandler<DrinkStock, Map<String, Integer
         } else {
 //            logService.info("Checking stock level to see if we need to raise a low-stock alert");
             DrinkStock drinkStock = inventory.getDrinkStock(delta.getDrinkName());
-            checkStockLevelIfNeeded(drinkStock, delta.getQuantity());
-            inventory.updateInventory(delta.getDrinkName(), delta.getQuantity());
+            checkStockLevelIfNeeded(inventory.getInventoryMap(),drinkStock, delta.getQuantity());
+            inventory.updateInventory( delta.getDrinkName(), delta.getQuantity());
         }
 
 //        logService.info("Returning full inventory: " + inventory.getInventoryMap());
@@ -47,12 +50,17 @@ public class BeachHack implements RequestHandler<DrinkStock, Map<String, Integer
     }
 
 
-    protected void checkStockLevelIfNeeded(DrinkStock drinkStock, int levelChange) {
+    protected void checkStockLevelIfNeeded(Map<String, Integer> inventory, DrinkStock drinkStock, int levelChange) {
         if (drinkStock == null) {
             return;
         }
+
+        Map<String, Integer> lowStock = inventory.entrySet().stream()
+                .filter(item -> item.getValue() <= DrinkStock.DEFAULT_ALERT_THRESHOLD + 1)
+                .collect(Collectors.toMap(drink -> drink.getKey(), drink -> drink.getValue()));
+
         if (drinkStock.getQuantity() > drinkStock.getAlertThreshold() && drinkStock.getQuantity() + levelChange <= drinkStock.getAlertThreshold()) {
-            alertService.alertLowStockLevel(drinkStock.getDrinkName(), drinkStock.getQuantity() + levelChange);
+            alertService.alertLowStockLevel(lowStock, drinkStock.getDrinkName(), drinkStock.getQuantity() + levelChange);
 //            logService.warn("Low stock alert for drink " + drinkStock.getDrinkName() + ": " + (drinkStock.getQuantity() + levelChange) + " remaining");
         }
     }

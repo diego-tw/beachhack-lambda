@@ -38,20 +38,22 @@ public class BeachHackTest {
 
     private BeachHack beachHack;
 
+    Map<String, Integer> inventoryMock;
+
     @Before
     public void setUp() throws Exception {
+        inventoryMock = new HashMap<>();
+        inventoryMock.put("Midori", 10);
+        inventoryMock.put("Coke", 2);
+        when(drinkInventory.getInventoryMap()).thenReturn(inventoryMock);
+        when(drinkInventory.getDrinkStock("Midori")).thenReturn(new DrinkStock("Midori", 10));
+
         beachHack = new BeachHack(drinkInventory, alertService, logService);
     }
 
     @Test
     public void handleRequestDoesUpdateInventory() throws Exception {
-        Map<String, Integer> inventoryMock = new HashMap<>();
-        inventoryMock.put("Midori", 10);
-        when(drinkInventory.getInventoryMap()).thenReturn(inventoryMock);
-        when(drinkInventory.getDrinkStock("Midori")).thenReturn(new DrinkStock("Midori", 10));
-
         Map<String, Integer> result = beachHack.handleRequest(new DrinkStock("Midori", 10), context);
-
         assertThat(result, is(inventoryMock));
         verify(drinkInventory).updateInventory("Midori", 10);
     }
@@ -84,7 +86,7 @@ public class BeachHackTest {
 
         beachHack.handleRequest(new DrinkStock("TestDrink", 1), context);
 
-        verify(alertService, never()).alertLowStockLevel(any(), anyInt());
+        verify(alertService, never()).alertLowStockLevel(any(),any(), anyInt());
     }
 
     @Ignore("Need to implement the logging service")
@@ -104,19 +106,20 @@ public class BeachHackTest {
     }
 
     private void validateStockLevelCheckRule(int currentStockLevel, int increase, int alertThreshold, boolean shouldRaiseAlert) throws Exception {
-        Map<String, DrinkStock> inventory = new HashMap<>();
         DrinkStock campariStock = new DrinkStock("Campari", currentStockLevel, alertThreshold);
-        inventory.put(campariStock.getDrinkName(), campariStock);
 
         when(drinkInventory.getDrinkStock(campariStock.getDrinkName())).thenReturn(campariStock);
 
         beachHack.handleRequest(new DrinkStock(campariStock.getDrinkName(), increase), context);
 
+        Map<String, Integer> coke = new HashMap<>();
+        coke.put("Coke", 2);
+
         if (shouldRaiseAlert) {
-            verify(alertService).alertLowStockLevel(campariStock.getDrinkName(), campariStock.getQuantity() + increase);
+            verify(alertService).alertLowStockLevel(coke, campariStock.getDrinkName(), campariStock.getQuantity() + increase);
 //            verify(logService).warn("Low stock alert for drink Campari: " + (campariStock.getQuantity() + increase) + " remaining");
         } else {
-            verify(alertService, never()).alertLowStockLevel(any(), anyInt());
+            verify(alertService, never()).alertLowStockLevel(any(), any(), anyInt());
         }
     }
 
